@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS `workLoad` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `dados` BLOB,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+ENGINE = InnoDB;
