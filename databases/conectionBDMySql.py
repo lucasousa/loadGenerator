@@ -27,28 +27,21 @@ class DataBaseMySql(object):
 		self.cursor.execute(query)
 		return self.cursor.fetchall() 
 
-	def convertToBinaryData(self, archive):
-    	# Convert digital data to binary format
-		with open(archive, 'rb') as file:
-			binaryData = file.read()
-		return binaryData        
-
 	def insert(self, archive):
 		sql_insert_blob_query ="""INSERT INTO workLoad(dados) VALUES (%s);"""
-		value = self.convertToBinaryData(archive)
-		insert_blob_tuple = (value,)
-		result = self.cursor.execute(sql_insert_blob_query, insert_blob_tuple)
+		insert_blob_tuple = (archive,)
+		self.cursor.execute(sql_insert_blob_query, insert_blob_tuple)
 		self.conexao.commit()
 
 """
 teste = DataBaseMySql()
 
-bytes = b"0x410x420x43x021"
+bytes = b"0x410x420x43x02123aaa"
 f = open("sample.txt", "wb")
 f.write(bytes)
 f.close()
 
 teste.connect()
-teste.insert("sample.txt")
+teste.insert(bytes)
 teste.disconnect()
 """
