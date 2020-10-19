@@ -2,10 +2,10 @@ import psycopg2
 
 class DataBasePostGres(object):
 	def __init__(self):
-		self.host = '' #ip do host
-		self.usuario = ''
-		self.db = '' #nome do databse
-		self.password = '' #senha do database
+		self.host = 'localhost'
+		self.usuario = 'lucas'
+		self.db = 'testecarga'
+		self.password = 'lucas12'
 		self.conexao = None
 		self.cursor = None
 
@@ -15,6 +15,15 @@ class DataBasePostGres(object):
 
 	def disconnect(self):
 		self.conexao.close()
-teste = DataBasePostGres()
 
+	def insert(self, archive):
+		self.cursor.execute("""INSERT INTO workload(dado) VALUES(%s);""", (archive,))
+		self.conexao.commit()
+
+"""
+teste = DataBasePostGres()
 teste.connect()
+bytes = b'teste2'
+teste.insert(bytes)
+teste.disconnect()
+"""
