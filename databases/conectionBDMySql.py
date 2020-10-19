@@ -3,10 +3,10 @@ from mysql.connector import Error
 
 class DataBaseMySql(object):
 	def __init__(self):
-		self.host = 'localhost'
-		self.usuario = 'lucas'
-		self.db = 'TesteCarga'
-		self.password = 'Lucas12*'
+		self.host = '' #ip do host
+		self.usuario = ''
+		self.db = '' #nome do databse
+		self.password = '' #senha do database
 		self.conexao = None
 		self.cursor = None
 
