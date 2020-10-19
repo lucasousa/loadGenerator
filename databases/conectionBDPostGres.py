@@ -1,11 +1,16 @@
 import psycopg2
+import json
 
 class DataBasePostGres(object):
 	def __init__(self):
-		self.host = 'localhost'
-		self.usuario = 'lucas'
-		self.db = 'testecarga'
-		self.password = 'lucas12'
+		file = open('db_auth_postgres.json')
+		auth = json.load(file)
+		file.close()
+
+		self.host = auth['host']
+		self.usuario = auth['user']
+		self.db = auth['db']
+		self.password = auth['password']
 		self.conexao = None
 		self.cursor = None
 

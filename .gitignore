@@ -1,3 +1,7 @@
+# auth json
+db_auth_mysql.json
+db_auth_postgres.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

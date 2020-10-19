@@ -1,12 +1,17 @@
 import mysql.connector
 from mysql.connector import Error
+import json
 
 class DataBaseMySql(object):
 	def __init__(self):
-		self.host = '' #ip do host
-		self.usuario = ''
-		self.db = '' #nome do databse
-		self.password = '' #senha do database
+		file = open('db_auth_mysql.json')
+		auth = json.load(file)
+		file.close()
+		
+		self.host = auth['host']
+		self.usuario = auth['user']
+		self.db = auth['db']
+		self.password = auth['password']
 		self.conexao = None
 		self.cursor = None
 
