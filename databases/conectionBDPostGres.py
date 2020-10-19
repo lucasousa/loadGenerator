@@ -3,7 +3,7 @@ import json
 
 class DataBasePostGres(object):
 	def __init__(self):
-		file = open('db_auth_postgres.json')
+		file = open('databases/db_auth_postgres.json')
 		auth = json.load(file)
 		file.close()
 

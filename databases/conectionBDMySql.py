@@ -4,10 +4,10 @@ import json
 
 class DataBaseMySql(object):
 	def __init__(self):
-		file = open('db_auth_mysql.json')
+		file = open('databases/db_auth_mysql.json')
 		auth = json.load(file)
 		file.close()
-		
+
 		self.host = auth['host']
 		self.usuario = auth['user']
 		self.db = auth['db']
@@ -28,25 +28,14 @@ class DataBaseMySql(object):
 		if(where):
 			query = query + " WHERE " + where
 
+		query = query + ';'
+
 		print('query: ', query)
 		self.cursor.execute(query)
 		return self.cursor.fetchall() 
 
 	def insert(self, archive):
-		sql_insert_blob_query ="""INSERT INTO workLoad(dados) VALUES (%s);"""
+		sql_insert_blob_query ="""INSERT INTO workload(dados) VALUES (%s);"""
 		insert_blob_tuple = (archive,)
 		self.cursor.execute(sql_insert_blob_query, insert_blob_tuple)
 		self.conexao.commit()
-
-"""
-teste = DataBaseMySql()
-
-bytes = b"0x410x420x43x02123aaa"
-f = open("sample.txt", "wb")
-f.write(bytes)
-f.close()
-
-teste.connect()
-teste.insert(bytes)
-teste.disconnect()
-"""
