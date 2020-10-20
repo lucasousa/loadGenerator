@@ -21,6 +21,18 @@ class DataBasePostGres(object):
 	def disconnect(self):
 		self.conexao.close()
 
+	def select(self, fields, tables, where=None):
+		query = "SELECT " + fields + " FROM " + tables
+
+		if(where):
+			query = query + " WHERE " + where
+
+		query = query + ';'
+
+		print('query: ', query)
+		self.cursor.execute(query)
+		return self.cursor.fetchall()
+
 	def insert(self, archive):
 		self.cursor.execute("""INSERT INTO workload(dado) VALUES(%s);""", (archive,))
 		self.conexao.commit()
