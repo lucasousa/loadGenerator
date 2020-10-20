@@ -35,15 +35,15 @@ class ClientThread(threading.Thread):
         self.db.insert(data)
         self.db.disconnect()
 
-
-
 if __name__ == '__main__':
+    print("Iniciando servidor...")
     addr = ("", 7000)
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     server.bind(addr)
     print("Servidor iniciado!")
     print("Aguardando nova conexao..")
+    os.system('nohup ./memoryLog.sh &')
     while True:
         server.listen(10)
         clientsock, clientAddress = server.accept()
