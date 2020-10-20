@@ -4,7 +4,9 @@ from connection import Conex
 from threading import Thread
 import time
 import pickle
+import json
 from workload.archiv_generator import config_workload
+from monitor.usage_loger import Loger
 
 class Client():
     def __init__(self):
@@ -15,11 +17,20 @@ class Client():
             print("Não foi possível conectar ao servidor, tente novamente mais tarde")
             exit(-1)
 
-    def sendDataInBytes(self):
+    def sendDataInBytes(self, info_experiments_path):
+        file = open(info_experiments_path)
+        info = json.load(file)
+        file.close()
+
         self.conexao.startConnection()
-        bytes = b"Testing"
-        self.conexao.sendMessage(pickle.dumps(bytes))
+        print("[client] start connection")
 
+        print("[client] start test")
+        for i in range(info['n_arc']):
+            print("[client] send message")
+            load = bytes((1024*1024)*info['size_in_MB'])
+            time.sleep(1/info['arc_per_sec'])
+            self.conexao.send(pickle.dumps(load))
+            print("[client] message sended")
 
-test = Client()
-test.sendDataInBytes()
+        print("[client] end test")
