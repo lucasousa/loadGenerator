@@ -1,6 +1,7 @@
 import threading
 import socket
 from databases.conectionBDMySql import DataBaseMySql
+from databases.conectionBDPostGres import DataBasePostGres
 import pickle
 import os
 
@@ -9,11 +10,11 @@ class ClientThread(threading.Thread):
         threading.Thread.__init__(self)
         self.csocket = clientsocket
         print ("Nova conexao: ", clientAddress)
-        self.db = DataBaseMySql()
+        #self.db = DataBaseMySql()
+        self.db = DataBasePostGres()
         
 
     def run(self):
-        ack = None
         data = b''
     
         while True:
@@ -27,8 +28,9 @@ class ClientThread(threading.Thread):
 
         data_received = pickle.loads(data)
 
-        print(type(data_received))
+        print(len(data_received))
         self.insertInBD(data_received)
+        #self.csocket.send("salvo no bd").encode()
     
     def insertInBD(self, data):
         self.db.connect()
@@ -36,16 +38,14 @@ class ClientThread(threading.Thread):
         self.db.disconnect()
 
 if __name__ == '__main__':
-    print("Iniciando servidor...")
     addr = ("", 7000)
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     server.bind(addr)
-    print("Servidor iniciado!")
-    print("Aguardando nova conexao..")
-    os.system('nohup ./memoryLog.sh &')
+    print("Servidor iniciado na porta 7000")
+    print("Aguardando nova conexao...")
     while True:
-        server.listen(10)
+        server.listen(1)
         clientsock, clientAddress = server.accept()
         newthread = ClientThread(clientAddress, clientsock)
         newthread.start()

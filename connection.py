@@ -13,7 +13,7 @@ class Conex():
 		self.client_socket.connect(self.address)
 
 	def send(self,content):	
-		self.client_socket.send(content) 
+		self.client_socket.sendall(content) 
 
 	def closeConnection(self):
 		self.client_socket.close()
