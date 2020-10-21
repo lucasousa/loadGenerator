@@ -5,7 +5,6 @@ import threading
 import time
 import pickle
 import json
-from monitor.usage_loger import Loger
 
 class Client(threading.Thread):
     def __init__(self, size):
@@ -20,6 +19,10 @@ class Client(threading.Thread):
     def run(self):
         self.conexao.startConnection()
         load = bytes((1024*1024)*self.size_arc)
+        start_time = time.time()
         self.conexao.send(pickle.dumps(load))
+        print(self.conexao.receive())
         print("[client] archive sended")
+        end_time = time.time()
+        print("RTT -", end_time-start_time)
         self.conexao.closeConnection()
