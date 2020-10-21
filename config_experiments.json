@@ -1,5 +1,5 @@
 {
     "n_arc": 10,
-    "size_in_MB": 2,
+    "size_in_MB": 100,
     "arc_per_sec": 3
 }

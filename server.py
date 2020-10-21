@@ -4,14 +4,15 @@ from databases.conectionBDMySql import DataBaseMySql
 from databases.conectionBDPostGres import DataBasePostGres
 import pickle
 import os
+from monitor.usage_loger import Loger
 
 class ClientThread(threading.Thread):
     def __init__(self,clientAddress,clientsocket):
         threading.Thread.__init__(self)
         self.csocket = clientsocket
         print ("Nova conexao: ", clientAddress)
-        #self.db = DataBaseMySql()
-        self.db = DataBasePostGres()
+        self.db = DataBaseMySql()
+        #self.db = DataBasePostGres()
         
 
     def run(self):
@@ -28,7 +29,7 @@ class ClientThread(threading.Thread):
 
         data_received = pickle.loads(data)
 
-        print(len(data_received))
+        print("Tamanho do Dado Recebido - ", len(data_received))
         self.insertInBD(data_received)
         #self.csocket.send("salvo no bd").encode()
     
@@ -46,6 +47,8 @@ if __name__ == '__main__':
     print("Aguardando nova conexao...")
     while True:
         server.listen(1)
+        newthread = Loger()
+        newthread.start()
         clientsock, clientAddress = server.accept()
         newthread = ClientThread(clientAddress, clientsock)
         newthread.start()
