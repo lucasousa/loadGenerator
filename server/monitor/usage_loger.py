@@ -8,11 +8,16 @@ class Loger(threading.Thread):
         threading.Thread.__init__(self)
         self.log_arc = "./monitor/log_usage.csv"
         self.file_log = None
+        self.read = True
 
     def run(self):
         self.file_log = open(self.log_arc, "a")
-        sleep(1)
-        self.file_log.write(f"{psutil.cpu_percent()},{psutil.virtual_memory().percent},{datetime.now(tz=None)}\n")
+        while self.read:
+            sleep(1)
+            self.file_log.write(f"{psutil.cpu_percent()},{psutil.virtual_memory().percent},{datetime.now(tz=None)}\n")
         self.file_log.close()
+
+    def stop(self):
+        self.read = False
 
  

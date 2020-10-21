@@ -11,7 +11,7 @@ class Client(threading.Thread):
         threading.Thread.__init__(self)
         self.size_arc = size
         try:
-            self.conexao = Conex('localhost', 7000)
+            self.conexao = Conex('192.168.31.203', 7000)
         except:
             print("Não foi possível conectar ao servidor, tente novamente mais tarde")
             exit(-1)

@@ -16,6 +16,8 @@ class ClientThread(threading.Thread):
         
 
     def run(self):
+        newthread = Loger()
+        newthread.start()
         data = b''
     
         while True:
@@ -32,6 +34,7 @@ class ClientThread(threading.Thread):
         print("Tamanho do Dado Recebido - ", len(data_received))
         self.insertInBD(data_received)
         self.csocket.send(b"salvo no bd")
+        newthread.stop()
     
     def insertInBD(self, data):
         self.db.connect()
@@ -39,7 +42,7 @@ class ClientThread(threading.Thread):
         self.db.disconnect()
 
 if __name__ == '__main__':
-    addr = ("", 7000)
+    addr = ("192.168.31.203", 7000)
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     server.bind(addr)
@@ -47,8 +50,6 @@ if __name__ == '__main__':
     print("Aguardando nova conexao...")
     while True:
         server.listen(10)
-        newthread = Loger()
-        newthread.start()
         clientsock, clientAddress = server.accept()
         newthread = ClientThread(clientAddress, clientsock)
         newthread.start()
