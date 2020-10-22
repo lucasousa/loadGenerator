@@ -4,6 +4,7 @@ from databases.conectionBDMySql import DataBaseMySql
 # from databases.conectionBDPostGres import DataBasePostGres
 import pickle
 import os
+import psutil
 from monitor.usage_loger import Loger
 
 class ClientThread(threading.Thread):
@@ -16,7 +17,8 @@ class ClientThread(threading.Thread):
         
 
     def run(self):
-        newthread = Loger()
+        p = psutil.Process()
+        newthread = Loger(p)
         newthread.start()
         data = b''
     
