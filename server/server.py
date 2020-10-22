@@ -1,7 +1,7 @@
 import threading
 import socket
 from databases.conectionBDMySql import DataBaseMySql
-# from databases.conectionBDPostGres import DataBasePostGres
+from databases.conectionBDPostGres import DataBasePostGres
 import pickle
 import os
 import psutil
@@ -12,8 +12,8 @@ class ClientThread(threading.Thread):
         threading.Thread.__init__(self)
         self.csocket = clientsocket
         print ("Nova conexao: ", clientAddress)
-        self.db = DataBaseMySql()
-        #self.db = DataBasePostGres()
+        #self.db = DataBaseMySql()
+        self.db = DataBasePostGres()
         
 
     def run(self):

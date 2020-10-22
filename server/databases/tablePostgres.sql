@@ -12,7 +12,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE public.workload
-  OWNER TO lucas;
+  OWNER TO jederilson;
 
 --Comando para criar a tabela
---psql -h localhost -U seuUser -d Banco < tablePostgres.sql
+--psql -h localhost -U jederilson -d testecarga < tablePostgres.sql
